@@ -44,7 +44,7 @@ export function initTable(settings, onAction) {
             Object.keys(item).forEach(key => {
                 if (row.elements[key]) {
                     row.elements[key].textContent = item[key];
-                    console.log(key);
+                    // console.log(key);
                     return row.elements[key];
                 }
             })

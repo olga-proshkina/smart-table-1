@@ -45,8 +45,10 @@ export function cloneTemplate(templateId) {
  */
 export function processFormData(formData) {
     // Преобразуем entries() в массив пар [ключ, значение] и создаем объект
+
     return Array.from(formData.entries()).reduce((result, [key, value]) => {
         result[key] = value;
+        // console.log(result);
         return result;
     }, {});
 }
