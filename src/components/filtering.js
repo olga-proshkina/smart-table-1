@@ -4,7 +4,6 @@ import {createComparison, defaultRules} from "../lib/compare.js";
 
 export function initFiltering(elements, indexes) {
     // @todo: #4.1 — заполнить выпадающие списки опциями
-    console.log(indexes);
     Object.keys(indexes)                                    // Получаем ключи из объекта
       .forEach((elementName) => {                        // Перебираем по именам
         elements[elementName].append(                    // в каждый элемент добавляем опции
