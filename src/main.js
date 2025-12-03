@@ -1,21 +1,19 @@
 import './fonts/ys-display/fonts.css'
 import './style.css'
 
-import {data as sourceData} from "./data/dataset_1.js";
-
 import {initData} from "./data.js";
 import {processFormData} from "./lib/utils.js";
 
 import {initTable} from "./components/table.js";
 import {initPagination} from './components/pagination.js';
-import { initSorting } from './components/sorting.js';
+import {initSorting } from './components/sorting.js';
 import {initFiltering} from './components/filtering.js'
 import {initSearching} from './components/searching.js'
 // @todo: подключение
 
 
 // Исходные данные используемые в render()
-const api = initData(sourceData);
+const api = initData();
 
 /**
  * Сбор и обработка полей из таблицы
@@ -41,16 +39,15 @@ async function render(action) {
     let state = collectState(); // состояние полей из таблицы
     let query = {}; // копируем для последующего изменения
     // @todo: использование
-    /*result = applySearching(result, state, action);
+    query = applySearching(query, state, action);
     
-    result = applySorting(result, state, action);
-    */
+    query = applySorting(query, state, action);
+    
     
     query = applyPagination(query, state, action);
-    // query = applyFiltering(query, state, action);
+    query = applyFiltering(query, state, action);
     const { total, items } = await api.getRecords(query);
     updatePagination(total, query);
-
     sampleTable.render(items);
 }
 
@@ -63,11 +60,11 @@ const sampleTable = initTable({
 
 // @todo: инициализация
 const applySearching = initSearching('search');
-console.log(sampleTable.search.elements.search);
 
-// const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements, {    // передаём элементы фильтра
-//     searchBySeller: indexes.sellers                                    // для элемента с именем searchBySeller устанавливаем массив продавцов
-// });
+
+const {applyFiltering, updateIndexes} = initFiltering(sampleTable.filter.elements, {    // передаём элементы фильтра
+    searchBySeller: api.sellers                                   // для элемента с именем searchBySeller устанавливаем массив продавцов
+});
 
 const applySorting = initSorting([        // Нам нужно передать сюда массив элементов, которые вызывают сортировку, чтобы изменять их визуальное представление
     sampleTable.header.elements.sortByDate,
@@ -91,9 +88,9 @@ appRoot.appendChild(sampleTable.container);
 
 async function init() {
     const indexes = await api.getIndexes();
-    //  updateIndexes(sampleTable.filter.elements, {
-    //     searchBySeller: indexes.sellers
-    // });
+    updateIndexes(sampleTable.filter.elements, {
+        searchBySeller: indexes.sellers
+     });
 }
 
 init().then(render);
