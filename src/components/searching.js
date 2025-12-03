@@ -11,6 +11,3 @@ export function initSearching(searchField) {
   };
 }
 
-// return (data, state, action) => {
-//         return data.filter((row) => compare(row, state));
-//         }

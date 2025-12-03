@@ -224,8 +224,6 @@ function compare(source, target, rulesList) {
     if (!source || typeof source !== 'object' || !target || typeof target !== 'object') {
         return false;
     }
-    console.log(source);
-    console.log(target);
     // Правила должны быть предоставлены
     // Подробнее: проверка входных параметров - хорошая практика программирования
     if (!Array.isArray(rulesList) || rulesList.length === 0) {
